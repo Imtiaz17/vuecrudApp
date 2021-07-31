@@ -9,7 +9,7 @@
           <b-field label="Password">
             <b-input type="password" v-model="form.password"></b-input>
           </b-field>
-          <b-button type="is-info" @click="login">Login</b-button>
+          <b-button :loading="isloading" type="is-info" @click="login">Login</b-button>
         </div>
       </div>
     </div>
@@ -22,6 +22,7 @@ export default {
   name: "login",
   data() {
     return {
+      isloading:false,
       form: {
         email: "",
         password: "",
@@ -30,6 +31,7 @@ export default {
   },
   methods: {
     async login() {
+      this.isloading=true
       await this.$axios
         .post("/auth/login", this.form)
         .then((res) => {
@@ -43,6 +45,7 @@ export default {
             });
         })
         .catch((error) => {
+          this.isloading-false
           if (error.response.data.email) {
             Vue.$toast.open({
               message: error.response.data.email[0],
