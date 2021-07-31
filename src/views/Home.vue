@@ -22,13 +22,13 @@
           </thead>
           <tbody>
             <tr v-for="(product, index) in products" :key="index">
-              <td>{{ product.title }}</td>
-              <td>{{ product.price }}</td>
-              <td>{{ product.description }}</td>
-              <td>
+              <td width="10%">{{ product.title }}</td>
+              <td width="10%">{{ product.price }}</td>
+              <td width="40%">{{ product.description }}</td>
+              <td width="20%">
                 <img :src="product.image" width="100" height="200" alt="" />
               </td>
-              <td>
+              <td width="30%">
                 <b-button
                   type="is-danger"
                   icon-right="delete"

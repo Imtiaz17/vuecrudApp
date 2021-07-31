@@ -15,7 +15,7 @@
     </template>
 
     <template slot="end">
-      <b-navbar-item tag="div" v-if="!loggedin">
+      <b-navbar-item tag="div" v-if="logged=='false'">
         <div class="buttons">
           <router-link to="/signup">
             <a class="button is-primary">
@@ -39,19 +39,30 @@
 import {removeToken} from '../utils/auth'
 export default {
   data() {
-    return {};
+    return {
+      logged:'false',
+    };
   },
   computed: {
     loggedin() {
       return localStorage.getItem("loggedin")
     },
   },
+  mounted(){
+      if(this.loggedin=='true'){
+        this.logged='true'
+      }else{
+        this.logged='false'
+    }
+  },
+
   methods: {
     async logout() {
       await this.$axios
         .post('auth/logout')
         .then((res) => {
             removeToken()
+          localStorage.setItem('loggedin',false)
            this.$router.push('/')
         })
         .catch((error) => {
@@ -63,6 +74,9 @@ export default {
 
     },
   },
+  watch:{
+    
+  }
 };
 </script>
 
